@@ -270,6 +270,9 @@ public class DriveTrain extends OpMode
                 liftMotor2.setPower(-1);
             }
         }
+        else if (gamepad2.dpad_right) {
+            pixelHolder.setPosition(0.4);
+        }
 
 
         // Show the elapsed game time and wheel power.

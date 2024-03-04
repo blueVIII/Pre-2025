@@ -16,8 +16,8 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
 
-@Autonomous(name = "red far", group = "Concept")
-public class AutoTemplate2 extends LinearOpMode{
+@Autonomous(name = "RedFar", group = "Concept")
+public class RedFar extends LinearOpMode{
     // tensorflow object detection
     private static final String TFOD_MODEL_ASSET = "model.tflite";
     private static final String[] LABELS = {"box"};
