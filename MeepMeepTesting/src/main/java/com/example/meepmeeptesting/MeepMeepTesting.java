@@ -18,15 +18,17 @@ public class MeepMeepTesting {
                         // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                         .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                         .followTrajectorySequence(drive ->
-                drive.trajectorySequenceBuilder(new Pose2d(10, -60, Math.toRadians(90)))
-//                        .splineTo(new Vector2d(6, -30), Math.toRadians(180))
-//                        .lineToLinearHeading(new Pose2d(12, -30, Math.toRadians(90)))
-//                        .back(40)
-                        .splineTo(new Vector2d(16, -30), Math.toRadians(0))
-                        .back(5)
-                        .strafeRight(15)
-                        .forward(40)
-                        .build()
+                                drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(180)))
+                                        .lineToLinearHeading(new Pose2d(36, 0, Math.toRadians(90)))
+                                        .lineToLinearHeading(new Pose2d(60, -5, Math.toRadians(90)))
+                                        .back(50)
+                                        .lineToLinearHeading(new Pose2d(36, -84, Math.toRadians(-90)))
+                                        .forward(7)
+                                        .back(10)
+                                        .strafeLeft(30)
+                                        .forward(17)
+                                        .build()
+
                         );
 
                 mm.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
@@ -41,15 +43,14 @@ public class MeepMeepTesting {
                         .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                         .followTrajectorySequence(drive ->
                                         drive.trajectorySequenceBuilder(new Pose2d(-34, -60, Math.toRadians(90)))
-                                                .lineToLinearHeading(new Pose2d(-34, -35, Math.toRadians(90)))
-                                                .lineToLinearHeading(new Pose2d(38, -35, Math.toRadians(0)))
-                                                .lineToLinearHeading(new Pose2d(-58, -35, Math.toRadians(0)))
-                                                .lineToLinearHeading(new Pose2d(38, -35, Math.toRadians(0)))
-
-                                                //                                        .splineToConstantHeading(new Vector2d(10, -34), Math.toRadians(-180))
-//                                        .lineToLinearHeading(new Pose2d(-34, -60, Math.toRadians(0)))
-                                                //                                            .lineToLinearHeading(new Pose2d(-0, -60, Math.toRadians(0)))
-//                                        .lineToLinearHeading(new Pose2d(38, -58, Math.toRadians(0)))
+                                                .lineToLinearHeading(new Pose2d(36, 0, Math.toRadians(90)))
+                                                .lineToLinearHeading(new Pose2d(3, -5, Math.toRadians(90)))
+                                                .back(50)
+                                                .lineToLinearHeading(new Pose2d(36, -84, Math.toRadians(-90)))
+                                                .forward(7)
+                                                .back(10)
+                                                .strafeLeft(30)
+                                                .forward(17)
                                                 .build()
                         );
 

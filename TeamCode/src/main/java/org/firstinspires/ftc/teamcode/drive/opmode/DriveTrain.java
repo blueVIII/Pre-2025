@@ -260,6 +260,7 @@ public class DriveTrain extends OpMode
 
         if (gamepad2.dpad_up) {
             plane.setPosition(1);
+//            pixelHolder.setPosition(0.55);
         }
         else if (gamepad2.dpad_down) {
             plane.setPosition(0.7);

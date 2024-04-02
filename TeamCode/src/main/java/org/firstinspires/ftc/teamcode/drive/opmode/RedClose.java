@@ -25,16 +25,6 @@ public class RedClose extends LinearOpMode{
     private TfodProcessor tfod;
     String detection; // variable for position of model (left, middle, or right)
 
-//    AprilTag IDs
-//    blue:
-//    int LEFT = 1;
-//    int MIDDLE = 2;
-//    int RIGHT = 3;
-//    red:
-//    int LEFT = 4;
-//    int MIDDLE = 5;
-//    int RIGHT = 6;
-
     // lift control
     int targetPosition = 1;
     int currentPosition;
@@ -67,47 +57,11 @@ public class RedClose extends LinearOpMode{
         Pose2d startingPose = new Pose2d();
         drive.setPoseEstimate(startingPose);
 
-        /*
-        TrajectorySequence beginning = drive.trajectorySequenceBuilder(startingPose)
-                .addTemporalMarker(() -> {
-                    drive.doorServo.setPosition(0.7);
-                })
-                .lineToLinearHeading(new Pose2d(33, 0, Math.toRadians(90)))
-                .forward(5)
-                .waitSeconds(0.5)
-                .addTemporalMarker(() -> {
-                    targetPosition = 1300;
-                })
-                .lineToLinearHeading(new Pose2d(35, -35, Math.toRadians(-90)))
-                .waitSeconds(.1)
-                .addTemporalMarker(() -> {
-                    drive.rightLiftServo.setPosition(1);
-                })
-                .waitSeconds(.1)
-                .forward(6)
-                .addTemporalMarker(() -> {
-                    drive.doorServo.setPosition(0);
-                })
-                .waitSeconds(1.25)
-                .back(10)
-                .addTemporalMarker(() -> {
-                    drive.rightLiftServo.setPosition(0.43);
-                })
-                .waitSeconds(.1)
-                .addTemporalMarker(() -> {
-                    direction = false;
-                    targetPosition = 0;
-                })
-                .build();
-        drive.followTrajectorySequenceAsync(beginning);
-
-         */
-
         telemetry.setMsTransmissionInterval(50);
 
         while (!isStarted() && !isStopRequested()) {
             updateTfod();// Push telemetry to the Driver Station.
-            drive.pixelServo.setPosition(0.5);
+            drive.pixelServo.setPosition(0.55);
             telemetry.update();
         }
 
@@ -126,6 +80,10 @@ public class RedClose extends LinearOpMode{
                         .forward(10)
                         .lineToLinearHeading(new Pose2d(31, 0, Math.toRadians(90)))
                         .forward(4)
+                        .waitSeconds(0.5)
+                        .addTemporalMarker(() -> {
+                            drive.pixelServo.setPosition(0.4);
+                        })
                         .waitSeconds(0.5)
                         .addTemporalMarker(() -> {
                             targetPosition = 1300;
@@ -169,6 +127,11 @@ public class RedClose extends LinearOpMode{
                             drive.doorServo.setPosition(0.7);
                         })
                         .forward(32)
+                        .waitSeconds(0.5)
+                        .addTemporalMarker(() -> {
+                            drive.pixelServo.setPosition(0.4);
+                        })
+                        .waitSeconds(0.5)
                         .back(10)
                         .waitSeconds(.1)
                         .addTemporalMarker(() -> {
@@ -215,6 +178,10 @@ public class RedClose extends LinearOpMode{
                         .lineToLinearHeading(new Pose2d(36, -22, Math.toRadians(90)))
                         .waitSeconds(0.5)
                         .addTemporalMarker(() -> {
+                            drive.pixelServo.setPosition(0.4);
+                        })
+                        .waitSeconds(0.5)
+                        .addTemporalMarker(() -> {
                             direction = true;
                             targetPosition = 1300;
                         })
@@ -253,84 +220,6 @@ public class RedClose extends LinearOpMode{
             }
             if (!drive.isBusy() && loop == 1) {
                 break;
-            }
-            if (detection == "left" && !drive.isBusy()) {
-                drive.setPoseEstimate(startingPose);
-                TrajectorySequence left = drive.trajectorySequenceBuilder(startingPose)
-                        .splineTo(new Vector2d(5, -30), Math.toRadians(180))
-                        .addTemporalMarker(() -> {
-                            drive.pixelServo.setPosition(0.4);
-                        })
-                        .waitSeconds(1)
-//                        .lineToLinearHeading(new Pose2d(50, -30, Math.toRadians(180)))
-                        .back(40, SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                                SampleMecanumDrive.getAccelerationConstraint(60))
-                        .addTemporalMarker(() -> {
-                            targetPosition = 1000;
-                            direction = true;
-                        })
-                        .waitSeconds(1)
-                        .addTemporalMarker(() -> {
-                            drive.rightLiftServo.setPosition(1);
-                            drive.leftLiftServo.setPosition(1);
-                            drive.doorServo.setPosition(1);
-                        })
-                        .build();
-                drive.followTrajectorySequenceAsync(left);
-                stop();
-            }
-            else if (detection == "middle" && !drive.isBusy()) {
-                TrajectorySequence middle = drive.trajectorySequenceBuilder(startingPose)
-                        .lineToLinearHeading(new Pose2d(12, -30, Math.toRadians(90)))
-                        .addTemporalMarker(() -> {
-                            drive.pixelServo.setPosition(0.4);
-                        })
-                        .waitSeconds(1)
-                        .back(15, SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                                SampleMecanumDrive.getAccelerationConstraint(60))
-                        .lineToLinearHeading(new Pose2d(50, -30, Math.toRadians(0)))
-                        .addTemporalMarker(() -> {
-                            targetPosition = 1000;
-                            direction = true;
-                        })
-                        .waitSeconds(1)
-                        .addTemporalMarker(() -> {
-                            drive.rightLiftServo.setPosition(1);
-                            drive.leftLiftServo.setPosition(1);
-                            drive.doorServo.setPosition(1);
-                        })
-                        .build();
-                drive.followTrajectorySequenceAsync(middle);
-                drive.breakFollowing();
-                stop();
-            }
-            else if (detection == "right" && !drive.isBusy()) {
-                TrajectorySequence right = drive.trajectorySequenceBuilder(startingPose)
-                        .splineTo(new Vector2d(16, -30), Math.toRadians(0))
-                        .addTemporalMarker(() -> {
-                            drive.pixelServo.setPosition(0.4);
-                        })
-                        .back(8, SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                                SampleMecanumDrive.getAccelerationConstraint(60))
-                        .strafeRight(15, SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                                SampleMecanumDrive.getAccelerationConstraint(60))
-                        .forward(40, SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                                SampleMecanumDrive.getAccelerationConstraint(60))
-                        .waitSeconds(1)
-                        .addTemporalMarker(() -> {
-                            targetPosition = 1000;
-                            direction = true;
-                        })
-                        .waitSeconds(1)
-                        .addTemporalMarker(() -> {
-                            drive.rightLiftServo.setPosition(1);
-                            drive.leftLiftServo.setPosition(1);
-                            drive.doorServo.setPosition(1);
-                        })
-                        .build();
-                drive.followTrajectorySequenceAsync(right);
-                drive.breakFollowing();
-                stop();
             }
 
             drive.update();
@@ -379,15 +268,6 @@ public class RedClose extends LinearOpMode{
             telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100);
             telemetry.addData("- Position", "%.0f / %.0f / %s", x, y, detection);
             telemetry.addData("- Size", "%.0f x %.0f", recognition.getWidth(), recognition.getHeight());
-        }
-        if (xCoordinate < 200) {
-            detection = "left";
-        }
-        else if (xCoordinate < 500) {
-            detection = "middle";
-        }
-        else {
-            detection = "right";
         }
     }
 

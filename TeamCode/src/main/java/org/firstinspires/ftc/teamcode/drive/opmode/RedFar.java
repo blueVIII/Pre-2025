@@ -24,16 +24,6 @@ public class RedFar extends LinearOpMode{
     private TfodProcessor tfod;
     String detection; // variable for position of model (left, middle, or right)
 
-//    AprilTag IDs
-//    blue:
-//    int LEFT = 1;
-//    int MIDDLE = 2;
-//    int RIGHT = 3;
-//    red:
-//    int LEFT = 4;
-//    int MIDDLE = 5;
-//    int RIGHT = 6;
-
     // lift control
     int targetPosition = 1;
     int loop = 0;
@@ -62,47 +52,11 @@ public class RedFar extends LinearOpMode{
         Pose2d startingPose = new Pose2d();
         drive.setPoseEstimate(startingPose);
 
-        /*
-        TrajectorySequence beginning = drive.trajectorySequenceBuilder(startingPose)
-                .addTemporalMarker(() -> {
-                    drive.doorServo.setPosition(0.7);
-                })
-                .lineToLinearHeading(new Pose2d(33, 0, Math.toRadians(90)))
-                .forward(5)
-                .waitSeconds(0.5)
-                .addTemporalMarker(() -> {
-                    targetPosition = 1300;
-                })
-                .lineToLinearHeading(new Pose2d(35, -35, Math.toRadians(-90)))
-                .waitSeconds(.1)
-                .addTemporalMarker(() -> {
-                    drive.rightLiftServo.setPosition(1);
-                })
-                .waitSeconds(.1)
-                .forward(6)
-                .addTemporalMarker(() -> {
-                    drive.doorServo.setPosition(0);
-                })
-                .waitSeconds(1.25)
-                .back(10)
-                .addTemporalMarker(() -> {
-                    drive.rightLiftServo.setPosition(0.43);
-                })
-                .waitSeconds(.1)
-                .addTemporalMarker(() -> {
-                    direction = false;
-                    targetPosition = 0;
-                })
-                .build();
-        drive.followTrajectorySequenceAsync(beginning);
-
-         */
-
         telemetry.setMsTransmissionInterval(50);
 
         while (!isStarted() && !isStopRequested()) {
             updateTfod();// Push telemetry to the Driver Station.
-            drive.pixelServo.setPosition(0);
+            drive.pixelServo.setPosition(0.55);
             telemetry.update();
         }
 
@@ -120,7 +74,12 @@ public class RedFar extends LinearOpMode{
                         })
                         .lineToLinearHeading(new Pose2d(36, 0, Math.toRadians(90)))
                         .waitSeconds(0.5)
-                        .lineToLinearHeading(new Pose2d(3, -5, Math.toRadians(90)))
+                        .addTemporalMarker(() -> {
+                            drive.pixelServo.setPosition(0.4);
+                        })
+                        .back(2)
+                        .waitSeconds(0.5)
+                        .lineToLinearHeading(new Pose2d(60, -5, Math.toRadians(90)))
                         .back(50)
                         .addTemporalMarker(() -> {
                             direction = true;
@@ -165,6 +124,10 @@ public class RedFar extends LinearOpMode{
                             drive.doorServo.setPosition(0.7);
                         })
                         .forward(32)
+                        .addTemporalMarker(() -> {
+                            drive.pixelServo.setPosition(0.4);
+                        })
+                        .waitSeconds(0.5)
                         .back(10)
                         .lineToLinearHeading(new Pose2d(3, 0, Math.toRadians(-90)))
                         .forward(50)
@@ -213,7 +176,12 @@ public class RedFar extends LinearOpMode{
                         .forward(15)
                         .lineToLinearHeading(new Pose2d(37, -2, Math.toRadians(-90)))
                         .waitSeconds(0.5)
-                        .lineToLinearHeading(new Pose2d(3, 5, Math.toRadians(-90)))
+                        .addTemporalMarker(() -> {
+                            drive.pixelServo.setPosition(0.4);
+                        })
+                        .back(2)
+                        .waitSeconds(0.5)
+                        .lineToLinearHeading(new Pose2d(60, 5, Math.toRadians(-90)))
                         .forward(54)
                         .addTemporalMarker(() -> {
                             direction = true;
@@ -225,7 +193,6 @@ public class RedFar extends LinearOpMode{
                             drive.rightLiftServo.setPosition(1);
                         })
                         .waitSeconds(.25)
-                        .forward(7)
                         .addTemporalMarker(() -> {
                             drive.doorServo.setPosition(0);
                         })
