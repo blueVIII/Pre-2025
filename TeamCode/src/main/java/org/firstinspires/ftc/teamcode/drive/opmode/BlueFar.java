@@ -16,8 +16,8 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
 
-@Autonomous(name = "RedFar", group = "Concept")
-public class RedFar extends LinearOpMode{
+@Autonomous(name = "BlueFar", group = "Concept")
+public class BlueFar extends LinearOpMode{
     // tensorflow object detection
     private static final String TFOD_MODEL_ASSET = "model.tflite";
     private static final String[] LABELS = {"box"};
@@ -29,6 +29,7 @@ public class RedFar extends LinearOpMode{
     int loop = 0;
     int currentPosition;
     boolean direction = true; //true == up
+    boolean done = false;
     private double lastError = 0;
     ElapsedTime timer = new ElapsedTime();
 
@@ -73,22 +74,23 @@ public class RedFar extends LinearOpMode{
                         })
                         .lineToLinearHeading(new Pose2d(36, 0, Math.toRadians(90)))
                         .waitSeconds(0.5)
+                        .forward(2)
                         .addTemporalMarker(() -> {
                             drive.pixelServo.setPosition(0.4);
                         })
                         .back(2)
                         .waitSeconds(0.5)
-                        .lineToLinearHeading(new Pose2d(59, -5, Math.toRadians(90)))
+                        .lineToLinearHeading(new Pose2d(60, -10, Math.toRadians(90)))
                         .waitSeconds(5)
-                        .back(50)
+                        .forward(50)
                         .addTemporalMarker(() -> {
                             direction = true;
-                            targetPosition = 1600;
+                            targetPosition = 1100;
                         })
-                        .lineToLinearHeading(new Pose2d(37.2, -84, Math.toRadians(-90)))
+                        .lineToLinearHeading(new Pose2d(24, 80, Math.toRadians(90)))
                         .waitSeconds(.1)
                         .addTemporalMarker(() -> {
-                            drive.rightLiftServo.setPosition(1);
+                            drive.rightLiftServo.setPosition(0.83);
                         })
                         .waitSeconds(.25)
                         .forward(7)
@@ -104,14 +106,14 @@ public class RedFar extends LinearOpMode{
                         .back(10)
                         .waitSeconds(.2)
                         .addTemporalMarker(() -> {
-                            drive.rightLiftServo.setPosition(0.43);
+                            drive.rightLiftServo.setPosition(0.53);
                         })
                         .waitSeconds(.1)
                         .UNSTABLE_addDisplacementMarkerOffset(3, () -> {
                             targetPosition = 100;
                             direction = false;
                         })
-                        .strafeLeft(23)
+                        .strafeRight(33)
                         .forward(17)
                         .waitSeconds(20)
                         .build();
@@ -123,29 +125,26 @@ public class RedFar extends LinearOpMode{
                         .addTemporalMarker(() -> {
                             drive.doorServo.setPosition(0.7);
                         })
-                        .lineToLinearHeading(new Pose2d(43, 12, Math.toRadians(-90)))
-//                        .forward(32)
+                        .lineToLinearHeading(new Pose2d(43, -12, Math.toRadians(90)))
                         .addTemporalMarker(() -> {
                             drive.pixelServo.setPosition(0.4);
                         })
                         .waitSeconds(0.5)
-                         .lineToLinearHeading(new Pose2d(60, 17, Math.toRadians(-90)))
-//                        .back(10)
-//                        .lineToLinearHeading(new Pose2d(3, 0, Math.toRadians(-90)))
+                        .back(2)
+                        .lineToLinearHeading(new Pose2d(60, -22, Math.toRadians(90)))
                         .waitSeconds(5)
-
                         .forward(60)
                         .addTemporalMarker(() -> {
                             direction = true;
                             targetPosition = 1600;
                         })
-                        .lineToLinearHeading(new Pose2d(33.5, -80, Math.toRadians(-90)))
+                        .lineToLinearHeading(new Pose2d(33.3, 80, Math.toRadians(90)))
                         .waitSeconds(0.1)
                         .addTemporalMarker(() -> {
-                            drive.rightLiftServo.setPosition(1);
+                            drive.rightLiftServo.setPosition(0.83);
                         })
-                        .waitSeconds(0.5)
-                        .forward(5)
+                        .waitSeconds(.75)
+                        .forward(9)
                         .addTemporalMarker(() -> {
                             drive.doorServo.setPosition(0);
                         })
@@ -158,14 +157,14 @@ public class RedFar extends LinearOpMode{
                         .back(10)
                         .waitSeconds(.2)
                         .addTemporalMarker(() -> {
-                            drive.rightLiftServo.setPosition(0.43);
+                            drive.rightLiftServo.setPosition(0.53);
                         })
                         .waitSeconds(.1)
                         .UNSTABLE_addDisplacementMarkerOffset(3, () -> {
                             targetPosition = 100;
                             direction = false;
                         })
-                        .strafeLeft(32)
+                        .strafeRight(27)
                         .forward(17)
                         .waitSeconds(20)
                         .build();
@@ -177,29 +176,27 @@ public class RedFar extends LinearOpMode{
                         .addTemporalMarker(() -> {
                             drive.doorServo.setPosition(0.7);
                         })
-                        .forward(15)
-                        .lineToLinearHeading(new Pose2d(37, -3, Math.toRadians(-90)))
+                        .lineToLinearHeading(new Pose2d(36, 0, Math.toRadians(-90)))
                         .waitSeconds(0.5)
                         .addTemporalMarker(() -> {
                             drive.pixelServo.setPosition(0.4);
                         })
-                        .back(3)
+                        .back(2)
                         .waitSeconds(0.5)
                         .lineToLinearHeading(new Pose2d(60, 5, Math.toRadians(-90)))
-                        .forward(54)
                         .waitSeconds(5)
-
+                        .back(50)
                         .addTemporalMarker(() -> {
                             direction = true;
                             targetPosition = 1600;
                         })
-                        .lineToLinearHeading(new Pose2d(24.3, -80, Math.toRadians(-90)))
+                        .lineToLinearHeading(new Pose2d(37.2, 84, Math.toRadians(90)))
                         .waitSeconds(.1)
                         .addTemporalMarker(() -> {
-                            drive.rightLiftServo.setPosition(1);
+                            drive.rightLiftServo.setPosition(0.83);
                         })
-                        .waitSeconds(.5)
-                        .forward(5)
+                        .waitSeconds(.25)
+                        .forward(7)
                         .addTemporalMarker(() -> {
                             drive.doorServo.setPosition(0);
                         })
@@ -212,14 +209,15 @@ public class RedFar extends LinearOpMode{
                         .back(10)
                         .waitSeconds(.2)
                         .addTemporalMarker(() -> {
-                            drive.rightLiftServo.setPosition(0.43);
+                            drive.rightLiftServo.setPosition(0.53
+                            );
                         })
                         .waitSeconds(.1)
                         .UNSTABLE_addDisplacementMarkerOffset(3, () -> {
                             targetPosition = 100;
                             direction = false;
                         })
-                        .strafeLeft(35)
+                        .strafeRight(26)
                         .forward(17)
                         .waitSeconds(20)
                         .build();

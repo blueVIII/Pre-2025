@@ -239,10 +239,10 @@ public class DriveTrain extends OpMode
         }
 
         if (gamepad2.y) {
-            rightLiftServo.setPosition(1);
+            rightLiftServo.setPosition(0.83);
 //            leftLiftServo.setPosition(0);
         } else if (gamepad2.a) {
-            rightLiftServo.setPosition(0.43);
+            rightLiftServo.setPosition(0.57);
 //            leftLiftServo.setPosition(0.82);
         }
 
@@ -260,7 +260,6 @@ public class DriveTrain extends OpMode
 
         if (gamepad2.dpad_up) {
             plane.setPosition(1);
-//            pixelHolder.setPosition(0.55);
         }
         else if (gamepad2.dpad_down) {
             plane.setPosition(0.7);

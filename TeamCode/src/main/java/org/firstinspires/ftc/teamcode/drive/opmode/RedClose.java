@@ -17,7 +17,6 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.List;
 
 @Autonomous(name = "RedClose", group = "Concept")
-
 public class RedClose extends LinearOpMode{
     // tensorflow object detection
     private static final String TFOD_MODEL_ASSET = "model.tflite";
@@ -30,7 +29,6 @@ public class RedClose extends LinearOpMode{
     int currentPosition;
     boolean direction = true; //true == up
 
-    boolean done = false;
     private double lastError = 0;
     ElapsedTime timer = new ElapsedTime();
     int loop = 0;
@@ -89,11 +87,11 @@ public class RedClose extends LinearOpMode{
                             targetPosition = 1300;
                         })
                         .lineToLinearHeading(new Pose2d(35, -35, Math.toRadians(-90)))
-                        .waitSeconds(.1)
+                        .waitSeconds(0.1)
                         .addTemporalMarker(() -> {
                             drive.rightLiftServo.setPosition(1);
                         })
-                        .waitSeconds(.25)
+                        .waitSeconds(0.25)
                         .forward(7)
                         .addTemporalMarker(() -> {
                             drive.doorServo.setPosition(0);
@@ -103,13 +101,13 @@ public class RedClose extends LinearOpMode{
                             targetPosition = 1800;
                             direction = true;
                         })
-                        .waitSeconds(.1)
+                        .waitSeconds(0.1)
                         .back(10)
-                        .waitSeconds(.2)
+                        .waitSeconds(0.2)
                         .addTemporalMarker(() -> {
                             drive.rightLiftServo.setPosition(0.43);
                         })
-                        .waitSeconds(.1)
+                        .waitSeconds(0.1)
                         .UNSTABLE_addDisplacementMarkerOffset(3, () -> {
                             targetPosition = 100;
                             direction = false;

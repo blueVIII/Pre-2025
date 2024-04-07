@@ -24,24 +24,11 @@ public class BlueClose extends LinearOpMode{
     private TfodProcessor tfod;
     String detection; // variable for position of model (left, middle, or right)
 
-//    AprilTag IDs
-//    blue:
-//    int LEFT = 1;
-//    int MIDDLE = 2;
-//    int RIGHT = 3;
-//    red:
-//    int LEFT = 4;
-//    int MIDDLE = 5;
-//    int RIGHT = 6;
-
-    //red near side
-
     // lift control
     int targetPosition = 1;
     int loop = 0;
     int currentPosition;
     boolean direction = true; //true == up
-    boolean done = false;
     private double lastError = 0;
     ElapsedTime timer = new ElapsedTime();
 
@@ -64,47 +51,11 @@ public class BlueClose extends LinearOpMode{
         Pose2d startingPose = new Pose2d();
         drive.setPoseEstimate(startingPose);
 
-        /*
-        TrajectorySequence beginning = drive.trajectorySequenceBuilder(startingPose)
-                .addTemporalMarker(() -> {
-                    drive.doorServo.setPosition(0.7);
-                })
-                .lineToLinearHeading(new Pose2d(33, 0, Math.toRadians(90)))
-                .forward(5)
-                .waitSeconds(0.5)
-                .addTemporalMarker(() -> {
-                    targetPosition = 1300;
-                })
-                .lineToLinearHeading(new Pose2d(35, -35, Math.toRadians(-90)))
-                .waitSeconds(.1)
-                .addTemporalMarker(() -> {
-                    drive.rightLiftServo.setPosition(1);
-                })
-                .waitSeconds(.1)
-                .forward(6)
-                .addTemporalMarker(() -> {
-                    drive.doorServo.setPosition(0);
-                })
-                .waitSeconds(1.25)
-                .back(10)
-                .addTemporalMarker(() -> {
-                    drive.rightLiftServo.setPosition(0.43);
-                })
-                .waitSeconds(.1)
-                .addTemporalMarker(() -> {
-                    direction = false;
-                    targetPosition = 0;
-                })
-                .build();
-        drive.followTrajectorySequenceAsync(beginning);
-
-         */
-
         telemetry.setMsTransmissionInterval(50);
 
         while (!isStarted() && !isStopRequested()) {
-            updateTfod();// Push telemetry to the Driver Station.
-            drive.pixelServo.setPosition(0);
+            updateTfod(); // Push telemetry to the Driver Station.
+            drive.pixelServo.setPosition(0.55);
             telemetry.update();
         }
 
@@ -122,19 +73,23 @@ public class BlueClose extends LinearOpMode{
                         })
                         .lineToLinearHeading(new Pose2d(38, 0, Math.toRadians(90)))
                         .waitSeconds(.25)
+                        .addTemporalMarker(() -> {
+                            drive.pixelServo.setPosition(0.4);
+                        })
+                        .waitSeconds(0.25)
                         .lineToLinearHeading(new Pose2d(20, -2, Math.toRadians(90)))
-                        .waitSeconds(.2)
+                        .waitSeconds(0.25)
                         .addTemporalMarker(() -> {
                             direction = true;
-                            targetPosition = 1300;
+                            targetPosition = 1100;
                         })
                         .lineToLinearHeading(new Pose2d(22, 35, Math.toRadians(90)))
-                        .waitSeconds(.1)
+                        .waitSeconds(0.1)
                         .addTemporalMarker(() -> {
-                            drive.rightLiftServo.setPosition(1);
+                            drive.rightLiftServo.setPosition(0.83);
                         })
-                        .waitSeconds(.25)
-                        .forward(9)
+                        .waitSeconds(0.75)
+                        .forward(6)
                         .addTemporalMarker(() -> {
                             drive.doorServo.setPosition(0);
                         })
@@ -147,14 +102,14 @@ public class BlueClose extends LinearOpMode{
                         .back(10)
                         .waitSeconds(.2)
                         .addTemporalMarker(() -> {
-                            drive.rightLiftServo.setPosition(0.43);
+                            drive.rightLiftServo.setPosition(0.53);
                         })
                         .waitSeconds(.1)
                         .UNSTABLE_addDisplacementMarkerOffset(3, () -> {
                             targetPosition = 100;
                             direction = false;
                         })
-                        .strafeLeft(25)
+                        .strafeLeft(28)
                         .forward(17)
                         .waitSeconds(20)
                         .build();
@@ -166,19 +121,25 @@ public class BlueClose extends LinearOpMode{
                         .addTemporalMarker(() -> {
                             drive.doorServo.setPosition(0.7);
                         })
-                        .forward(34)
+                        .forward(32
+                        )
+                        .waitSeconds(0.25)
+                        .addTemporalMarker(() -> {
+                            drive.pixelServo.setPosition(0.4);
+                        })
+                        .waitSeconds(0.25)
                         .back(10)
                         .waitSeconds(.2)
                         .addTemporalMarker(() -> {
                             direction = true;
-                            targetPosition = 1400;
+                            targetPosition = 1100;
                         })
                         .lineToLinearHeading(new Pose2d(28, 35, Math.toRadians(90)))
                         .waitSeconds(.1)
                         .addTemporalMarker(() -> {
-                            drive.rightLiftServo.setPosition(1);
+                            drive.rightLiftServo.setPosition(0.83);
                         })
-                        .waitSeconds(.25)
+                        .waitSeconds(.75)
                         .forward(9)
                         .addTemporalMarker(() -> {
                             drive.doorServo.setPosition(0);
@@ -192,7 +153,7 @@ public class BlueClose extends LinearOpMode{
                         .back(10)
                         .waitSeconds(.2)
                         .addTemporalMarker(() -> {
-                            drive.rightLiftServo.setPosition(0.43);
+                            drive.rightLiftServo.setPosition(0.53);
                         })
                         .waitSeconds(.1)
                         .UNSTABLE_addDisplacementMarkerOffset(3, () -> {
@@ -214,23 +175,26 @@ public class BlueClose extends LinearOpMode{
                         .forward(10)
                         .lineToLinearHeading(new Pose2d(32, -2.5, Math.toRadians(-90)))
                         .forward(3)
-                        .waitSeconds(.2)
+                        .waitSeconds(0.25)
+                        .addTemporalMarker(() -> {
+                            drive.pixelServo.setPosition(0.4);
+                        })
+                        .waitSeconds(0.5)
                         .addTemporalMarker(() -> {
                             direction = true;
-                            targetPosition = 1300;
+                            targetPosition = 1100;
                         })
                         .lineToLinearHeading(new Pose2d(35, 35, Math.toRadians(90)))
                         .waitSeconds(.1)
                         .addTemporalMarker(() -> {
-                            drive.rightLiftServo.setPosition(1);
+                            drive.rightLiftServo.setPosition(0.83);
                         })
-                        .waitSeconds(.25)
+                        .waitSeconds(.75)
                         .forward(9)
                         .addTemporalMarker(() -> {
                             drive.doorServo.setPosition(0);
                         })
-                        .waitSeconds(1.25)
-                        .waitSeconds(1.5)
+                        .waitSeconds(0.5)
                         .UNSTABLE_addDisplacementMarkerOffset(0, () -> {
                             targetPosition = 1700;
                             direction = true;
@@ -238,7 +202,7 @@ public class BlueClose extends LinearOpMode{
                         .waitSeconds(.1)
                         .back(10)
                         .addTemporalMarker(() -> {
-                            drive.rightLiftServo.setPosition(0.43);
+                            drive.rightLiftServo.setPosition(0.53);
                         })
                         .waitSeconds(.1)
                         .UNSTABLE_addDisplacementMarkerOffset(3, () -> {
